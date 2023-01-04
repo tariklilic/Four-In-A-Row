@@ -2,6 +2,8 @@ import scala.:+
 import scala.io.StdIn.readLine
 import scala.io.StdIn.readInt
 import scala.util.control.Breaks._
+import java.io.PrintWriter
+import java.io._
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -37,6 +39,7 @@ object Main {
 
           if (input > cols || input < 1) {
             println("The number you chose is not valid!")
+            save(gameBoard, player1History, player2History)
           } else {
             continue = true
           }
@@ -134,5 +137,16 @@ object Main {
 
     // Return None if no player has won
     None
+  }
+
+  def save(data: Array[Array[String]], moveHistory1: Array[Int], moveHistory2: Array[Int]): Unit = {
+    val board = new PrintWriter(new File("board.txt"))
+    val moveHistory = new PrintWriter(new File("moveHistory.txt"))
+    data.foreach(x => board.write(x.mkString(",") + "\n"))
+    board.close
+    moveHistory1.foreach(z => moveHistory.write(z.toString + ","))
+    moveHistory.write("\n")
+    moveHistory2.foreach(y => moveHistory.write(y.toString + ","))
+    moveHistory.close
   }
 }
